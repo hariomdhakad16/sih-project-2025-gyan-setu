@@ -10,11 +10,11 @@ describe('lruCleanup', () => {
 
   const createMockLesson = (id: string, lastAccessed: number, sizeMB: number): Lesson => ({
     id,
-    title: { en: `Lesson ${id}` },
-    content: { en: 'Content' },
+    title: { en: `Lesson ${id}`, pa: `Lesson ${id}`, hi: `Lesson ${id}` },
+    content: { en: 'Content', pa: 'Content', hi: 'Content' },
     media: [{ type: 'video', url: 'url', size: sizeMB * 1024 * 1024 }],
     subject: 'Math',
-    grade: '8',
+    grade: 8,
     downloadStatus: 'downloaded',
     lastAccessed,
   });

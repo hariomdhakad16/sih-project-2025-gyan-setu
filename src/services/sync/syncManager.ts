@@ -1,6 +1,6 @@
 import { db } from '../storage/dexie.db';
 import { syncService } from '../api/sync.service';
-import type { Progress, CompletionEvent } from '../../types';
+import type { Progress, ProgressEvent } from '../../types';
 
 export const syncManager = {
   /**
@@ -8,21 +8,16 @@ export const syncManager = {
    */
   async performSync(userId: string, token: string, lastSyncToken: string) {
     try {
-      // 1. Get local progress that hasn't been synced or has new events
-      // For MVP, we'll just send all local progress and let the server handle it,
-      // or we can filter by some flag. For now, let's get all progress for this user.
       const localProgress = await db.progress
         .where('userId')
         .equals(userId)
         .toArray();
 
-      // 2. Call sync API
       const response = await syncService.sync({
         lastSyncToken,
         localProgress,
       }, token);
 
-      // 3. Merge server changes into local DB
       for (const serverItem of response.serverChanges) {
         const localItem = await db.progress.get([userId, serverItem.lessonId]);
         
@@ -58,10 +53,10 @@ export const syncManager = {
 
     return {
       ...server,
-      userId: local.userId, // Ensure we keep correct ID
+      userId: local.userId,
       status,
       lastAccessed: Math.max(local.lastAccessed, server.lastAccessed),
-      quizScore: Math.max(local.quizScore || 0, server.quizScore || 0),
+      score: Math.max(local.score || 0, server.score || 0),
       completionEvents: combinedEvents,
     };
   },
@@ -69,13 +64,15 @@ export const syncManager = {
   /**
    * Helper to merge arrays of completion events by taking the union based on timestamp.
    */
-  mergeEvents(local: CompletionEvent[], server: CompletionEvent[]): CompletionEvent[] {
-    const eventMap = new Map<number, CompletionEvent>();
+  mergeEvents(local: ProgressEvent[], server: ProgressEvent[]): ProgressEvent[] {
+    const eventMap = new Map<number, ProgressEvent>();
     
     [...local, ...server].forEach(event => {
-      eventMap.set(event.completedAt, event);
+      // If we have same timestamp but different types, we should probably keep both or prioritize 'complete'
+      // For now, union by timestamp is fine as per requirements.
+      eventMap.set(event.timestamp, event);
     });
 
-    return Array.from(eventMap.values()).sort((a, b) => b.completedAt - a.completedAt);
+    return Array.from(eventMap.values()).sort((a, b) => b.timestamp - a.timestamp);
   }
 };

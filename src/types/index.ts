@@ -1,11 +1,13 @@
 export type UserRole = 'student' | 'teacher';
+export type SupportedLanguage = 'pa' | 'hi' | 'en';
 
 export interface User {
   id: string;
   name: string;
   phone: string;
+  pinHash?: string; // Hashed PIN for offline verification
   role: UserRole;
-  languagePreference: string;
+  languagePreference: SupportedLanguage;
   syncToken?: string;
 }
 
@@ -19,29 +21,31 @@ export interface MediaItem {
 
 export interface Lesson {
   id: string;
-  title: Record<string, string>; // Multilingual titles
-  content: Record<string, string>; // Multilingual content (HTML/JSON string)
+  title: Record<SupportedLanguage, string>;
+  content: Record<SupportedLanguage, any>; // Flexible for JSON or HTML
   media: MediaItem[];
   subject: string;
-  grade: string;
+  grade: number; // Integer as per data-model.md
   downloadStatus: DownloadStatus;
   lastAccessed: number;
 }
 
 export type ProgressStatus = 'not_started' | 'in_progress' | 'completed';
+export type ProgressEventType = 'complete' | 'attempt';
 
-export interface CompletionEvent {
-  lessonId: string;
-  completedAt: number;
+export interface ProgressEvent {
+  type: ProgressEventType;
+  timestamp: number;
 }
 
 export interface Progress {
   userId: string;
   lessonId: string;
   status: ProgressStatus;
+  score: number; // Renamed from quizScore to match data-model.md
   lastAccessed: number;
-  quizScore?: number;
-  completionEvents: CompletionEvent[]; // For cumulative merge
+  lastSynced?: number; // Server timestamp of last sync
+  completionEvents: ProgressEvent[]; // Renamed from events for clarity in code
 }
 
 export interface AuthState {
@@ -52,4 +56,3 @@ export interface AuthState {
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
 }
-
