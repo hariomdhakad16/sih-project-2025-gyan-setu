@@ -5,6 +5,7 @@ import { LessonViewerLayout } from './components/layouts/LessonViewerLayout/Less
 import { Home } from './components/pages/Home/Home';
 import { Login } from './components/pages/Login/Login';
 import { SignUp } from './components/pages/SignUp/SignUp';
+import { LessonViewer } from './components/pages/LessonViewer/LessonViewer';
 import './App.css';
 
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ':id',
-        element: <div className="p-4 text-center">Loading Lesson Content...</div>,
+        element: <LessonViewer />,
       },
     ],
   },
