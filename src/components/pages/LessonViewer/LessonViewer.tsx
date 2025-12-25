@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useMultilingual } from '../../../hooks/useMultilingual';
 import { db } from '../../../services/storage/dexie.db';
-import type { Lesson, SupportedLanguage } from '../../../types';
+import type { Lesson } from '../../../types';
 
 /**
  * LessonViewer component displays the content of a specific lesson.
@@ -10,13 +10,10 @@ import type { Lesson, SupportedLanguage } from '../../../types';
  */
 export const LessonViewer: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const { i18n } = useTranslation();
+    const { getLocalized } = useMultilingual();
     const [lesson, setLesson] = useState<Lesson | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // Get current language from i18next (handle 'en-US' -> 'en')
-    const currentLang = (i18n.language?.split('-')[0] || 'en') as SupportedLanguage;
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -60,9 +57,9 @@ export const LessonViewer: React.FC = () => {
         );
     }
 
-    // Hot-reloading: pick localized content or fallback to English
-    const title = lesson.title[currentLang] || lesson.title['en'] || 'Untitled Lesson';
-    const content = lesson.content[currentLang] || lesson.content['en'] || 'No content available.';
+    // Hot-reloading: pick localized content using the hook
+    const title = getLocalized(lesson.title) || 'Untitled Lesson';
+    const content = getLocalized(lesson.content) || 'No content available.';
 
     return (
         <article className="animate-in fade-in duration-500">
