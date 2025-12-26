@@ -146,6 +146,14 @@
   --color-overview-surface-dark: #2d4625;
   --color-overview-surface-dark-hover: #36542c;
 
+  /* Teacher Reports Page Colors */
+  --color-reports-primary: #4cdf20;
+  --color-reports-primary-dark: #3ab516;
+  --color-reports-bg-dark: #152111;
+  --color-reports-surface-dark: #1e2d1a;
+  --color-reports-surface-light: #ffffff;
+  --color-reports-text-sec: #a0c695;
+
   --radius: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;

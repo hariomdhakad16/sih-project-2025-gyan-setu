@@ -19,10 +19,7 @@ const LessonList = lazy(() => import('./components/pages/LessonList/LessonList')
 const TeacherDashboard = lazy(() => import('./components/pages/TeacherDashboard/TeacherDashboard').then(module => ({ default: module.TeacherDashboard })));
 const QuizAttempt = lazy(() => import('./components/pages/QuizAttempt/QuizAttempt').then(module => ({ default: module.QuizAttempt })));
 const Progress = lazy(() => import('./components/pages/Progress/Progress').then(module => ({ default: module.Progress })));
-const DigitalLiteracy = lazy(() => import('./components/pages/DigitalLiteracy/DigitalLiteracy').then(module => ({ default: module.DigitalLiteracy })));
-const Downloads = lazy(() => import('./components/pages/Downloads/Downloads').then(module => ({ default: module.Downloads })));
-const TeacherContent = lazy(() => import('./components/pages/TeacherContent/TeacherContent').then(module => ({ default: module.TeacherContent })));
-const TeacherClassOverview = lazy(() => import('./components/pages/TeacherClassOverview/TeacherClassOverview').then(module => ({ default: module.TeacherClassOverview })));
+const TeacherReports = lazy(() => import('./components/pages/TeacherReports/TeacherReports').then(module => ({ default: module.TeacherReports })));
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<div className="h-screen w-full flex items-center justify-center"><Spinner /></div>}>
@@ -109,7 +106,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'reports',
-        element: <div className="p-4 text-2xl">Reports Page (Coming Soon)</div>,
+        element: <SuspenseWrapper><TeacherReports /></SuspenseWrapper>,
       },
       {
         path: 'settings',
