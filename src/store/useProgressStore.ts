@@ -14,7 +14,7 @@ interface ProgressState {
   clearProgress: () => void;
 }
 
-export const useProgressStore = create<ProgressState>((set, get) => ({
+export const useProgressStore = create<ProgressState>((set) => ({
   progress: {},
   isLoading: false,
   error: null,

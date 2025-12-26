@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ProgressDashboard } from './ProgressDashboard';
 import { useProgressStore } from '../../../store/useProgressStore';
 import { useAuthStore } from '../../../store/useAuthStore';
-import { db } from '../../../services/storage/dexie.db';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 
