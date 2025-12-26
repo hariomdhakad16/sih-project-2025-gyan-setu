@@ -135,6 +135,17 @@
   --color-teacher-surface-active: #2d4625;
   --color-teacher-text-sec: #a0c695;
 
+  /* Teacher Class Overview Page Colors */
+  --color-overview-primary: #4cdf20;
+  --color-overview-primary-dark: #3ab018;
+  --color-overview-secondary: #a0c695;
+  --color-overview-danger: #fa4b38;
+  --color-overview-warning: #f59e0b;
+  --color-overview-bg-light: #f6f8f6;
+  --color-overview-bg-dark: #152111;
+  --color-overview-surface-dark: #2d4625;
+  --color-overview-surface-dark-hover: #36542c;
+
   --radius: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
