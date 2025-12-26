@@ -154,6 +154,17 @@
   --color-reports-surface-light: #ffffff;
   --color-reports-text-sec: #a0c695;
 
+  /* Parent View Page Colors */
+  --color-parent-primary: #4cdf20;
+  --color-parent-primary-dark: #3ab816;
+  --color-parent-bg-light: #f6f8f6;
+  --color-parent-bg-dark: #152111;
+  --color-parent-surface-light: #ffffff;
+  --color-parent-surface-dark: #1e2f1a;
+  --color-parent-text-main: #111b0e;
+  --color-parent-text-secondary: #4a5946;
+  --color-parent-border: #e2e8e0;
+
   --radius: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
